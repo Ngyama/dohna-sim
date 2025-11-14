@@ -9,9 +9,8 @@
       <div class="skill-header">
         <span class="skill-name">{{ skill.name }}</span>
         <span class="skill-tags">{{ skill.tags }}</span>
+        <span class="skill-cost">{{ skill.cost }}</span>
       </div>
-      <div class="skill-description">{{ skill.description }}</div>
-      <div class="skill-cost">{{ skill.cost }}</div>
     </div>
   </div>
 </template>

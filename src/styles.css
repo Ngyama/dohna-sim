@@ -65,16 +65,20 @@ body {
     gap: 60px;
 }
 
-.team-left .status-bar {
-    display: none;
-}
+/* Show status bars for all characters */
 
 .team-left .character-box {
     overflow: visible;
+    position: relative;
+    transition: transform 0.6s ease-in-out;
 }
 
 .team-left .character-sprite {
     transform: scale(4) translateY(-15px);
+}
+
+#player-2 .character-sprite {
+    transform: scale(6.3) translateY(-5px);
 }
 
 .team-right {
@@ -93,6 +97,7 @@ body {
     align-items: center;
     gap: 10px;
     position: relative;
+    transition: transform 0.6s ease-in-out;
 }
 
 /* Turn arrow indicator */
@@ -155,16 +160,15 @@ body {
 }
 
 .team-right .character-sprite {
-    width: 100%;
-    height: 100%;
-    transform: scaleX(-2.5) scaleY(2.5);
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
     display: block;
-    object-fit: contain;
+    object-fit: none;
 }
 
-.team-right .status-bar {
-    display: none;
-}
+/* Status bars are now visible for all characters */
 
 /* Target highlight - blue line at bottom */
 .character.target-yellow::after,
@@ -192,46 +196,65 @@ body {
 
 /* Status bar */
 .status-bar {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 6px 12px;
-    border-radius: 5px;
-    min-width: 140px;
-    font-size: 11px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-width: 160px;
+    font-size: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8px;
+    transform: translateY(-75px);
 }
 
 .status-item {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin: 2px 0;
+    gap: 6px;
+    margin: 4px 0;
+    position: relative;
 }
 
 .status-label {
-    min-width: 25px;
+    min-width: 28px;
     font-weight: bold;
+    font-size: 11px;
+    color: #fff;
 }
 
 .status-bar-fill {
-    height: 10px;
-    border-radius: 2px;
-    min-width: 50px;
+    height: 12px;
+    border-radius: 3px;
+    min-width: 60px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: width 0.3s ease;
 }
 
 .hp-bar {
-    background: #ff6b9d;
+    background: linear-gradient(90deg, #ff6b9d 0%, #ff4757 100%);
+    box-shadow: 0 0 4px rgba(255, 107, 157, 0.5);
 }
 
 .mp-bar {
-    background: #51cf66;
+    background: linear-gradient(90deg, #51cf66 0%, #40c057 100%);
+    box-shadow: 0 0 4px rgba(81, 207, 102, 0.5);
 }
 
 .vp-bar {
-    background: #ffd43b;
+    background: linear-gradient(90deg, #ffd43b 0%, #ffc107 100%);
+    box-shadow: 0 0 4px rgba(255, 212, 59, 0.5);
 }
 
 .status-value {
     margin-left: auto;
-    font-size: 9px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #fff;
+    min-width: 30px;
+    text-align: right;
 }
 
 
@@ -398,8 +421,8 @@ body {
     flex: 0 0 45%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    justify-content: center;
+    gap: 15px;
+    justify-content: flex-start;
     align-items: stretch;
 }
 
@@ -431,7 +454,7 @@ body {
     background: linear-gradient(135deg, #2c3e50, #34495e);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 16px 20px;
+    padding: 24px 28px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -461,21 +484,22 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 6px;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .skill-name {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     color: #ff6b9d;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .skill-tags {
-    font-size: 12px;
+    font-size: 14px;
     color: #95a5a6;
     background: rgba(149, 165, 166, 0.2);
-    padding: 2px 8px;
+    padding: 4px 10px;
     border-radius: 8px;
 }
 
@@ -487,12 +511,12 @@ body {
 }
 
 .skill-cost {
-    font-size: 13px;
+    font-size: 15px;
     color: #ffd43b;
     font-weight: bold;
-    display: inline-block;
     background: rgba(255, 212, 59, 0.15);
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 8px;
+    margin-left: auto;
 }
 

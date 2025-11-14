@@ -1,47 +1,69 @@
 export const skillsData = [
   { 
     id: 1, 
-    name: '拳击', 
-    icon: '👊', 
-    tags: '[単体][距離:1]', 
-    description: 'POW40%の昇天技 そして相手はDEF-60%', 
+    name: '斬撃', 
+    tags: '[距離:1]', 
     cost: 'MP 08',
-    targets: ['enemy-1'],
+    targetIndices: [0],
     type: 'attack',
     baseDamage: 120
   },
   { 
     id: 2, 
-    name: '横扫', 
-    icon: '⛓️', 
-    tags: '[全体][距離:3]', 
-    description: 'POW60%の範囲攻撃 複数の敵にダメージを与える', 
+    name: '薙ぎ払い', 
+    tags: '[距離:2]', 
     cost: 'MP 16',
-    targets: ['enemy-1', 'enemy-2', 'enemy-3'],
+    targetIndices: [0, 1],
     type: 'attack',
     baseDamage: 80
   },
   { 
     id: 3, 
-    name: '治疗', 
-    icon: '💚', 
-    tags: '[単体][回復]', 
-    description: 'HPを回復する 味方を治療する', 
+    name: '回復', 
+    tags: '[距離:1]', 
     cost: 'MP 12',
     targets: ['player-1'],
     type: 'heal',
     healPercent: 0.3 
+  }
+]
+
+export const warriorSkillsData = [
+  { 
+    id: 101, 
+    name: '斬撃', 
+    tags: '[距離:1]', 
+    cost: 'MP 08',
+    targetIndices: [0],
+    type: 'attack',
+    baseDamage: 120
   },
   { 
-    id: 4, 
-    name: 'サンダーボルト', 
-    icon: '⚡', 
-    tags: '[全体][距離:3]', 
-    description: 'POW80%の雷撃技 全体にダメージを与える', 
-    cost: 'MP 24',
-    targets: [],
+    id: 102, 
+    name: '薙ぎ払い', 
+    tags: '[距離:2]', 
+    cost: 'MP 16',
+    targetIndices: [0, 1],
+    type: 'attack',
+    baseDamage: 80
+  },
+  { 
+    id: 103, 
+    name: '下段斬り', 
+    tags: '[距離:1]', 
+    cost: 'MP 10',
+    targetIndices: [0],
     type: 'attack',
     baseDamage: 100
+  },
+  { 
+    id: 104, 
+    name: '回復', 
+    tags: '[距離:1]', 
+    cost: 'MP 12',
+    targets: ['player-2'],
+    type: 'heal',
+    healPercent: 0.3 
   }
 ]
 

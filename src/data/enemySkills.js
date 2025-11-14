@@ -1,10 +1,10 @@
 export const enemySkillsData = {
   slash: {
     id: 'slash',
-    name: '斩击',
+    name: '斬撃',
     icon: '⚔️',
     tags: '[単体][距離:1]',
-    description: '基础的斩击攻击',
+    description: '基本的な斬撃攻撃',
     cost: 'MP 05',
     type: 'attack',
     baseDamage: 80

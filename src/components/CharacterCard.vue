@@ -14,15 +14,10 @@
         <div class="status-bar-fill hp-bar" :style="{ width: `${(character.hp / character.maxHp) * 100}%` }"></div>
         <span class="status-value">{{ character.hp }}</span>
       </div>
-      <div class="status-item">
+      <div v-if="character.id.startsWith('player-')" class="status-item">
         <span class="status-label">MP</span>
         <div class="status-bar-fill mp-bar" :style="{ width: `${(character.mp / character.maxMp) * 100}%` }"></div>
         <span class="status-value">{{ character.mp }}</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">VP</span>
-        <div class="status-bar-fill vp-bar" :style="{ width: `${(character.vp / character.maxVp) * 100}%` }"></div>
-        <span class="status-value">{{ character.vp }}</span>
       </div>
     </div>
     <div 
@@ -39,6 +34,7 @@
         :src="character.sprite" 
         :alt="character.name"
         class="character-sprite"
+        :style="getSpriteStyle()"
       />
       <span v-else>{{ character.name }}</span>
     </div>
@@ -46,7 +42,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   character: {
     type: Object,
     required: true
@@ -62,5 +58,45 @@ defineProps({
 })
 
 defineEmits(['click'])
+
+const getAnimationType = (sprite) => {
+  if (!sprite) return 'idle'
+  const spritePath = sprite.toString()
+  if (spritePath.includes('idle')) return 'idle'
+  if (spritePath.includes('walk') || spritePath.includes('run')) return 'walk'
+  if (spritePath.includes('attack')) return 'attack'
+  if (spritePath.includes('hit')) return 'hit'
+  if (spritePath.includes('death')) return 'death'
+  return 'idle'
+}
+
+const getSpriteStyle = () => {
+  if (props.character.id.startsWith('enemy-') && props.character.spriteScales) {
+    const animType = getAnimationType(props.character.sprite)
+    const config = props.character.spriteScales[animType]
+    
+    let scale = 2.5
+    let offsetY = 0
+    
+    if (typeof config === 'number') {
+      scale = config
+    } else if (config && typeof config === 'object') {
+      scale = config.scale || 2.5
+      offsetY = config.offsetY || 0
+    }
+    
+    return {
+      transform: `scaleX(-${scale}) scaleY(${scale}) translateY(${offsetY}px)`,
+      width: 'auto',
+      height: 'auto',
+      maxWidth: 'none',
+      maxHeight: 'none',
+      objectFit: 'none',
+      display: 'block',
+      imageRendering: 'pixelated'
+    }
+  }
+  return {}
+}
 </script>
 

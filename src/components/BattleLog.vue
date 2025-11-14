@@ -22,7 +22,6 @@ const props = defineProps({
 
 const logRef = ref(null)
 
-// Auto scroll to bottom
 watch(() => props.logs.length, async () => {
   await nextTick()
   if (logRef.value) {

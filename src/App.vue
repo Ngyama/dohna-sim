@@ -91,10 +91,12 @@ import playerIdleGif from './assets/enemy/Player/Samura_idle.gif'
 import samuraRunGif from './assets/enemy/Player/Samura_run.gif'
 import samuraAttack1Gif from './assets/enemy/Player/Samura_attack1.gif'
 import samuraAttack2Gif from './assets/enemy/Player/Samura_attack2.gif'
+import samuraHitGif from './assets/enemy/Player/Samura_hit.gif'
 import warriorIdleGif from './assets/enemy/Warrior/idle.gif'
 import warriorAttack1Gif from './assets/enemy/Warrior/attack1.gif'
 import warriorAttack2Gif from './assets/enemy/Warrior/attack2.gif'
 import warriorAttack3Gif from './assets/enemy/Warrior/attack3.gif'
+import warriorHitGif from './assets/enemy/Warrior/hit.gif'
 import background1 from './assets/background/RTB_v1.0/background.png'
 import background2 from './assets/background/RTB_v1.0/background2.png'
 import background3 from './assets/background/RTB_v1.0/background3.png'
@@ -332,6 +334,26 @@ const showEnemyHitAnimation = async (enemy) => {
   
   enemy.sprite = swordHitGif
   await new Promise(resolve => setTimeout(resolve, 300))
+}
+
+// Show player hit animation
+const showPlayerHitAnimation = async (player) => {
+  if (!player || !player.id.startsWith('player-')) return
+  
+  if (player.id === 'player-1') {
+    player.sprite = samuraHitGif
+  } else if (player.id === 'player-2') {
+    player.sprite = warriorHitGif
+  } else {
+    return
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 300))
+  
+  // Restore to idle if still alive
+  if (player.hp > 0) {
+    player.sprite = player.id === 'player-1' ? playerIdleGif : warriorIdleGif
+  }
 }
 
 const showEnemyDeathAnimation = async (enemy) => {
@@ -800,6 +822,9 @@ const executeEnemyAttackAnimation = async (enemy, targetPlayer) => {
   
   // Step 2: Change to attack sprite
   enemy.sprite = swordAttackGif
+  
+  // Show player hit animation
+  await showPlayerHitAnimation(targetPlayer)
   
   // Execute damage (enemy: fixed 10 damage)
   const slashSkill = enemySkillsData.slash

@@ -424,6 +424,8 @@ body {
     gap: 15px;
     justify-content: flex-start;
     align-items: stretch;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 /* Target indicator lines */

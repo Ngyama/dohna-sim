@@ -58,13 +58,24 @@
       </div>
 
       <div class="skill-list">
-        <SkillItem
-          v-for="skill in skills"
-          :key="skill.id"
-          :skill="skill"
-          :is-active="activeSkillId === skill.id"
-          @select="onSkillSelect"
-        />
+        <template v-if="activeMenu === 'skill'">
+          <SkillItem
+            v-for="skill in skills"
+            :key="skill.id"
+            :skill="skill"
+            :is-active="activeSkillId === skill.id"
+            @select="onSkillSelect"
+          />
+        </template>
+        <template v-else-if="activeMenu === 'item'">
+          <SkillItem
+            v-for="item in items"
+            :key="item.id"
+            :skill="item"
+            :is-active="activeItemId === item.id"
+            @select="onItemSelect"
+          />
+        </template>
       </div>
     </div>
 
@@ -80,6 +91,7 @@ import BattleLog from './components/BattleLog.vue'
 import TargetLines from './components/TargetLines.vue'
 import { skillsData, warriorSkillsData } from './data/skills.js'
 import { enemySkillsData } from './data/enemySkills.js'
+import { itemsData } from './data/items.js'
 import { executeSkill } from './utils/skillExecutor.js'
 import { getCurrentTurnPair, getCurrentTurnCharacter, isCurrentTurn, getEnemyForPlayer, isPlayerTurn as checkIsPlayerTurn } from './utils/turnManager.js'
 import swordIdleGif from './assets/enemy/Sword/sword_idle.gif'
@@ -106,6 +118,7 @@ import background4 from './assets/background/RTB_v1.0/background4.png'
 const currentTurn = ref(1)
 const activeMenu = ref('skill')
 const activeSkillId = ref(null)
+const activeItemId = ref(null)
 const battleLogs = ref([
   '戦闘開始',
   'P1のターン'
@@ -234,6 +247,14 @@ const skills = computed(() => {
     targets: getSkillTargets(skill)
   }))
 })
+
+const items = computed(() => {
+  // Only show items during player turns
+  if (!isPlayerTurn.value) {
+    return []
+  }
+  return itemsData
+})
 const highlightMap = ref({})
 const targetPaths = ref([])
 
@@ -245,8 +266,17 @@ const activeSkill = computed(() => {
   return skills.value.find(s => s.id === activeSkillId.value)
 })
 
-// Reset active skill when skills change
+// Reset active skill/item when turn changes
 watch(() => currentTurn.value, () => {
+  activeSkillId.value = null
+  activeItemId.value = null
+  highlightMap.value = {}
+  targetPaths.value = []
+})
+
+// Reset active item when switching menus
+watch(() => activeMenu.value, () => {
+  activeItemId.value = null
   activeSkillId.value = null
   highlightMap.value = {}
   targetPaths.value = []
@@ -269,6 +299,12 @@ const onSkillSelect = (skill) => {
   activeSkillId.value = skill.id
   updateHighlights()
   updateTargetLines()
+}
+
+// Item selection handler (no logic, just for UI)
+const onItemSelect = (item) => {
+  activeItemId.value = item.id
+  // No actual logic binding, just for visual feedback
 }
 
 const updateHighlights = () => {
